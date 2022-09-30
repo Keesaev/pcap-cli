@@ -10,12 +10,15 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 file(GLOB SOURCES
     ./src/*.cpp
     ./src/*.h
-    ./src/protocols/datalink/*.cpp
-    ./src/protocols/datalink/*.h
-    ./src/protocols/internet/*.cpp
-    ./src/protocols/internet/*.h
-    ./src/protocols/transport/*.h
-    ./src/protocols/transport/*.cpp
+    ./src/protocol-headers/datalink/*.cpp
+    ./src/protocol-headers/datalink/*.hpp
+    ./src/protocol-headers/datalink/*.h
+    ./src/protocol-headers/network/*.cpp
+    ./src/protocol-headers/network/*.hpp
+    ./src/protocol-headers/network/*.h
+    ./src/protocol-headers/transport/*.h
+    ./src/protocol-headers/transport/*.cpp
+    ./src/protocol-headers/transport/*.hpp
 )
 
 add_executable(${CMAKE_PROJECT_NAME}

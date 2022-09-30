@@ -1,7 +1,7 @@
 #include "sniffer.h"
 
-#include "protocols/datalink/ethernet_2.hpp"
-#include "protocols/internet/ipv4.hpp"
+#include "protocol-headers/datalink/ethernet_2.h"
+#include "protocol-headers/network/ipv4.h"
 
 #include <iostream> // TODO RM
 
@@ -38,12 +38,7 @@ void sniffer::capture_one()
         return;
     }
 
-    const ethernet_2_s *datalink = reinterpret_cast<const ethernet_2_s*>(body);
-    std::cout << "ether_type " << datalink->ether_type << std::endl;
-    if(datalink->ether_type == 8){
-        const ipv4_s *ip = reinterpret_cast<const ipv4_s*>(body + sizeof(datalink));
-        std::cout << "ipv4 " << (int)ip->protocol << std::endl;        
-    }
+    ethernet_2 eth(body);
 }
 
 std::vector<std::pair<std::string, std::string>> sniffer::devices()
