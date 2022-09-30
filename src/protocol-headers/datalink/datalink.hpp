@@ -2,9 +2,16 @@
 
 #include <string>
 
+enum class network_proto_type {
+    unsupported = 0,
+    ipv4,
+    ipv6
+};
+
 class datalink {
 public:
-    virtual int next_protocol_type() const = 0;
+    virtual network_proto_type next_protocol() const = 0;
+    virtual int size() const = 0;
 
     virtual ~datalink() { }
 };

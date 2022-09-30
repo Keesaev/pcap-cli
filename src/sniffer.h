@@ -12,6 +12,7 @@ class sniffer {
     int m_packetCount { 0 };
     bool m_running = false;
     char errbuf[PCAP_ERRBUF_SIZE];
+    int _datalink_type;
 
     void capture_one();
 

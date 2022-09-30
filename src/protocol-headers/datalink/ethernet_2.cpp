@@ -5,7 +5,19 @@ ethernet_2::ethernet_2(const unsigned char* bytes)
 {
 }
 
-int ethernet_2::next_protocol_type() const
+network_proto_type ethernet_2::next_protocol() const
 {
-    return _data.ether_type;
+    switch (_data.ether_t) {
+    case ether_type::ipv4:
+        return network_proto_type::ipv4;
+    case ether_type::ipv6:
+        return network_proto_type::ipv6;
+    default:
+        return network_proto_type::unsupported;
+    }
+}
+
+int ethernet_2::size() const
+{
+    return sizeof(ethernet_2_h);
 }

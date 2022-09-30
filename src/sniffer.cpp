@@ -19,6 +19,8 @@ sniffer::sniffer(std::string const& device_name)
         pcap_set_buffer_size(_handle.get(), PCAP_BUF_SIZE);
         pcap_set_tstamp_type(_handle.get(), PCAP_TSTAMP_HOST);
         pcap_activate(_handle.get());
+
+        _datalink_type = pcap_datalink(_handle.get());
     }
 }
 
@@ -39,6 +41,9 @@ void sniffer::capture_one()
     }
 
     ethernet_2 eth(body);
+    if (eth.next_protocol() == network_proto_type::ipv4) {
+        ipv4 ip(body + eth.size());
+    }
 }
 
 std::vector<std::pair<std::string, std::string>> sniffer::devices()
@@ -61,5 +66,5 @@ std::vector<std::pair<std::string, std::string>> sniffer::devices()
 
 int sniffer::link_layer() const
 {
-    return pcap_datalink(_handle.get());
+    return _datalink_type;
 }
