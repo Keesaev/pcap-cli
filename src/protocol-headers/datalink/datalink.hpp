@@ -22,6 +22,8 @@ class datalink {
 public:
     virtual network_proto_type next_protocol() const = 0;
     virtual int proto_size() const = 0;
+    virtual int size() const = 0;
+    virtual const std::pair<std::string,std::string> operator[](std::size_t idx) const = 0;
 
     virtual ~datalink() { }
 };

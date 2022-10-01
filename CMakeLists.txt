@@ -22,6 +22,10 @@ file(GLOB SOURCES
     ./src/protocol-headers/transport/*.cpp
     ./src/protocol-headers/transport/*.hpp
     ./src/protocol-headers/transport/*.h
+    ./src/sinks/*.h
+    ./src/sinks/*.h
+    ./src/sinks/tui/*.h
+    ./src/sinks/tui/*.cpp
 )
 
 add_executable(${CMAKE_PROJECT_NAME}

@@ -1,7 +1,5 @@
 #include "sniffer.h"
 
-#include "protocol-headers/packet.h"
-
 #include <iostream> // TODO RM
 
 std::unordered_map<sniffer_ex_code, std::string> sniffer_exception::_code_strings {
@@ -15,10 +13,11 @@ std::unordered_map<sniffer_ex_code, std::string> sniffer_exception::_code_string
     { sniffer_ex_code::link_layer_not_sup, "Datalink layer not supported" }
 };
 
-sniffer::sniffer(std::string const& device_name)
+sniffer::sniffer(std::string const& device_name, std::function<void(packet)> callback)
     : _handle { std::unique_ptr<pcap_t, void (*)(pcap_t*)>(
         pcap_create(device_name.c_str(), errbuf),
         [](pcap_t* handle) { pcap_close(handle); }) }
+    , _callback { callback }
 {
     if (_handle.get()) {
         pcap_set_snaplen(_handle.get(), 65535);
@@ -45,20 +44,20 @@ sniffer::sniffer(std::string const& device_name)
 
 void sniffer::run()
 {
-    // struct pcap_pkthdr and the packet data are not to
-    // be freed by the caller, and are not guaranteed to be valid
+    // TODO while(_running)
 
-    // TODO while()
+    for (int i = 0; i < 10; i++) {
+        // struct pcap_pkthdr and the packet data are not to
+        // be freed by the caller, and are not guaranteed to be valid
 
-    pcap_pkthdr* header;
-    const unsigned char* body;
+        pcap_pkthdr* header;
+        const unsigned char* body;
 
-    if (pcap_next_ex(_handle.get(), &header, &body) != 1) {
-        return; // continue
+        if (pcap_next_ex(_handle.get(), &header, &body) != 1) {
+            continue;
+        }
+        _callback(packet(_datalink_proto, body));
     }
-
-    packet p(_datalink_proto, body);
-    std::cout << "src_addr " << p.get_network()->src_addr() << std::endl;
 }
 
 std::vector<std::pair<std::string, std::string>> sniffer::devices()

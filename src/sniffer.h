@@ -1,7 +1,10 @@
 #pragma once
 
+#include "protocol-headers/packet.h"
+
 #include <pcap/pcap.h>
 
+#include <functional>
 #include <memory>
 #include <string>
 #include <unordered_map>
@@ -40,6 +43,7 @@ public:
 
 class sniffer {
     std::unique_ptr<pcap_t, void (*)(pcap_t*)> _handle;
+    std::function<void(packet)> _callback;
 
     int m_packetCount { 0 };
     bool m_running = false;
@@ -47,7 +51,7 @@ class sniffer {
     int _datalink_proto;
 
 public:
-    sniffer(std::string const& device_name) noexcept(false);
+    sniffer(std::string const& device_name, std::function<void(packet)> callback) noexcept(false);
     static std::vector<std::pair<std::string, std::string>> devices();
 
     void run();

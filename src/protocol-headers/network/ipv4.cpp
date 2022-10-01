@@ -11,7 +11,6 @@ ipv4::ipv4(const unsigned char* bytes)
         std::cout << std::hex << (int)bytes[i] << std::dec << ' ';
     }
     std::cout << std::endl;
-    std::cout << "IP NEXT PROTO = " << (int)_data.protocol << std::endl;
 }
 
 std::string ipv4::src_addr() const

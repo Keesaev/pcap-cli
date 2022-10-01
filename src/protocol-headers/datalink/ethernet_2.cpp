@@ -5,6 +5,10 @@
 
 #include <netinet/in.h>
 
+const std::array<std::string, 3> ethernet_2::_descriptions {
+    "Destination mac", "Source mac", "Ether type"
+};
+
 ethernet_2::ethernet_2(const unsigned char* bytes)
 {
     std::memcpy(&_data, bytes, sizeof(ethernet_2_h));
@@ -14,8 +18,6 @@ ethernet_2::ethernet_2(const unsigned char* bytes)
         std::cout << std::hex << (int)bytes[i] << " ";
     }
     std::cout << std::endl;
-
-    std::cout << "src\t" << pretty_mac(_data.src_mac) << "\tdest:\t" << pretty_mac(_data.dest_mac) << std::endl;
 }
 
 network_proto_type ethernet_2::next_protocol() const
@@ -42,4 +44,18 @@ std::string ethernet_2::pretty_mac(const uint8_t* const src_mac) const
         src_mac[4],
         src_mac[5]);
     return std::string(str);
+}
+
+const std::pair<std::string, std::string> ethernet_2::operator[](std::size_t idx) const
+{
+    switch (idx) {
+    case 0:
+        return { pretty_mac(_data.dest_mac), _descriptions[0] };
+    case 1:
+        return { pretty_mac(_data.src_mac), _descriptions[1] };
+    case 2:
+        return { std::to_string(_data.ether_t), _descriptions[2] };
+    default:
+        return { "", "" };
+    }
 }
