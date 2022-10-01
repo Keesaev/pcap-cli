@@ -5,6 +5,15 @@
 #include "network.hpp"
 
 class ipv4 final : public network {
+#pragma pack(push, 1)
+    struct ip_addr {
+        uint8_t oct1;
+        uint8_t oct2;
+        uint8_t oct3;
+        uint8_t oct4;
+    };
+#pragma pack(pop)
+
     const struct ipv4_h {
         uint8_t v_hl;
         uint8_t tos;
@@ -14,8 +23,8 @@ class ipv4 final : public network {
         uint8_t ttl;
         uint8_t protocol;
         uint16_t checksum;
-        uint32_t src_addr;
-        uint32_t dest_addr;
+        ip_addr src_addr;
+        ip_addr dest_addr;
     } _data;
 
 public:

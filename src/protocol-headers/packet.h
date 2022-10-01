@@ -11,4 +11,6 @@ class packet {
     // std::unique_ptr<transport> _transport;
 public:
     packet(int datalink_proto, const unsigned char* bytes);
+    std::unique_ptr<datalink> const& get_datalink() const { return _datalink; }
+    std::unique_ptr<network> const& get_network() const { return _network; }
 };

@@ -1,6 +1,7 @@
 # Prerequisites
 *.d
 .vscode/
+CMakeLists.txt.user
 # qtcreator
 Sniffer.pro.user
 *.pro.user

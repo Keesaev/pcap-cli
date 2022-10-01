@@ -54,9 +54,11 @@ void sniffer::run()
     const unsigned char* body;
 
     if (pcap_next_ex(_handle.get(), &header, &body) != 1) {
-        return;
+        return; // continue
     }
+
     packet p(_datalink_proto, body);
+    std::cout << "src_addr " << p.get_network()->src_addr() << std::endl;
 }
 
 std::vector<std::pair<std::string, std::string>> sniffer::devices()

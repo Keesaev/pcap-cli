@@ -11,6 +11,7 @@ int main()
 
     try{
         s = std::make_unique<sniffer>(sniffer::devices()[0].first);
+        s->run();
     }
     catch(sniffer_exception ex){
         std::cerr << ex.what() << std::endl;
