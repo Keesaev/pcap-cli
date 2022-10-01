@@ -37,7 +37,7 @@ public:
 
     virtual std::string src_addr() const final;
     virtual std::string dst_addr() const final;
-    virtual int next_protocol_type() const final;
+    virtual transport_proto_type next_protocol_type() const final;
 
     virtual ~ipv4() { }
 };

@@ -13,6 +13,8 @@ class ethernet_2 final : public datalink {
         uint16_t ether_t;
     } _data;
 #pragma pack(pop)
+    std::string pretty_mac(const uint8_t* const src_mac) const;
+
 public:
     ethernet_2(const unsigned char* bytes);
 
