@@ -2,7 +2,7 @@
 
 #include "network.hpp"
 
-class unsupported final : public network {
+class unsupported_network final : public network {
 public:
     virtual std::string src_addr() const final { return ""; };
     virtual std::string dst_addr() const final { return ""; };
@@ -11,5 +11,5 @@ public:
         return transport_proto_type::unsupported;
     };
 
-    virtual ~unsupported() { }
+    virtual ~unsupported_network() { }
 };

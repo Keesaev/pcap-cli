@@ -1,8 +1,8 @@
 #pragma once
 
-#include "datalink_factory.h"
+#include "datalink.hpp"
 
-class unsupported final : public datalink {
+class unsupported_datalink final : public datalink {
 public:
     virtual network_proto_type next_protocol() const final
     {
@@ -10,5 +10,5 @@ public:
     }
     virtual int size() const final { return 0; };
 
-    virtual ~unsupported() { }
+    virtual ~unsupported_datalink() { }
 };
