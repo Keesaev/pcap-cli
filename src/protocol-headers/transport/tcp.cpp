@@ -1,3 +1,8 @@
 #include "tcp.h"
 
-tcp::tcp(const unsigned char* bytes) { }
+#include <iostream> // TODO rm
+
+tcp::tcp(const unsigned char* bytes)
+    : _data { *reinterpret_cast<const tcp_h*>(bytes) }
+{
+}

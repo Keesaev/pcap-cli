@@ -10,6 +10,7 @@ public:
     {
         return transport_proto_type::unsupported;
     };
+    virtual int size() { return 0; }
 
     virtual ~unsupported_network() { }
 };

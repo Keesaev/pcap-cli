@@ -5,6 +5,7 @@
 #include <stdint.h>
 
 class tcp final : public transport {
+#pragma pack(push, 1)
     struct tcp_control {
         uint8_t data_offset : 4;
         uint8_t reserved : 3;
@@ -27,7 +28,8 @@ class tcp final : public transport {
         uint16_t win_size;
         uint16_t checksum;
         uint16_t urg_ptr;
-    };
+    } _data;
+#pragma pack(pop)
 
 public:
     tcp(const unsigned char* bytes);
