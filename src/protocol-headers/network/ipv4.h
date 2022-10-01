@@ -5,16 +5,21 @@
 #include "network.hpp"
 
 class ipv4 final : public network {
-#pragma pack(push, 1)
     struct ip_addr {
         uint8_t oct1;
         uint8_t oct2;
         uint8_t oct3;
         uint8_t oct4;
-    };
-#pragma pack(pop)
 
-    const struct ipv4_h {
+        std::string pretty_str() const
+        {
+            char str[17];
+            sprintf(str, "%i.%i.%i.%i", oct1, oct2, oct3, oct4);
+            return std::string(str);
+        }
+    };
+
+    struct ipv4_h {
         uint8_t v_hl;
         uint8_t tos;
         uint16_t length;
