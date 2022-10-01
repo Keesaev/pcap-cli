@@ -2,7 +2,13 @@
 
 #include "ethernet_2.h"
 
-std::unique_ptr<datalink> datalink_factory::make_datalink(int type)
+std::unique_ptr<datalink> datalink_factory::make_datalink(datalink_proto_type type,
+    const unsigned char* bytes)
 {
-    return std::unique_ptr<datalink>(nullptr);
+    switch (type) {
+    case datalink_proto_type::ethernet_2:
+        return std::unique_ptr<datalink>(new ethernet_2(bytes));
+    default:
+        return std::unique_ptr<datalink>(nullptr);
+    }
 }

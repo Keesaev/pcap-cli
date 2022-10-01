@@ -6,5 +6,6 @@
 
 class datalink_factory {
 public:
-    static std::unique_ptr<datalink> make_datalink(int type);
+    static std::unique_ptr<datalink> make_datalink(datalink_proto_type type,
+        const unsigned char* bytes);
 };

@@ -1,9 +1,19 @@
 #include "sniffer.h"
 
-#include "protocol-headers/datalink/ethernet_2.h"
-#include "protocol-headers/network/ipv4.h"
+#include "protocol-headers/packet.h"
 
 #include <iostream> // TODO RM
+
+std::unordered_map<sniffer_ex_code, std::string> sniffer_exception::_code_strings {
+    { sniffer_ex_code::already_activated, "PCAP already activated" },
+    { sniffer_ex_code::no_such_device, "No such device" },
+    { sniffer_ex_code::perm_denied, "Permission denied" },
+    { sniffer_ex_code::promisc_denied, "No permission to put capture into promiscuous mode" },
+    { sniffer_ex_code::monitor_not_sup, "Capture source doesn't support monitor mode" },
+    { sniffer_ex_code::iface_not_up, "Interface not up" },
+    { sniffer_ex_code::generic_err, "Generic error" },
+    { sniffer_ex_code::link_layer_not_sup, "Datalink layer not supported" }
+};
 
 sniffer::sniffer(std::string const& device_name)
     : _handle { std::unique_ptr<pcap_t, void (*)(pcap_t*)>(
@@ -18,32 +28,35 @@ sniffer::sniffer(std::string const& device_name)
         pcap_set_immediate_mode(_handle.get(), 1);
         pcap_set_buffer_size(_handle.get(), PCAP_BUF_SIZE);
         pcap_set_tstamp_type(_handle.get(), PCAP_TSTAMP_HOST);
-        pcap_activate(_handle.get());
+        auto act = pcap_activate(_handle.get());
 
-        _datalink_type = pcap_datalink(_handle.get());
+        if (act != 0) {
+            throw sniffer_exception(act);
+        }
+
+        _datalink_proto = pcap_datalink(_handle.get());
+        if (supported_datalink_protos.find(_datalink_proto) == supported_datalink_protos.end()) {
+            throw sniffer_exception(sniffer_ex_code::link_layer_not_sup);
+        }
+    } else {
+        throw sniffer_exception(sniffer_ex_code::generic_err);
     }
 }
 
 void sniffer::run()
 {
-    capture_one();
-}
-
-void sniffer::capture_one()
-{
     // struct pcap_pkthdr and the packet data are not to
     // be freed by the caller, and are not guaranteed to be valid
+
+    // TODO while()
+
     pcap_pkthdr* header;
     const unsigned char* body;
 
     if (pcap_next_ex(_handle.get(), &header, &body) != 1) {
         return;
     }
-
-    ethernet_2 eth(body);
-    if (eth.next_protocol() == network_proto_type::ipv4) {
-        ipv4 ip(body + eth.size());
-    }
+    packet p(_datalink_proto, body);
 }
 
 std::vector<std::pair<std::string, std::string>> sniffer::devices()
@@ -62,9 +75,4 @@ std::vector<std::pair<std::string, std::string>> sniffer::devices()
     }
     pcap_freealldevs(alldevs);
     return devs;
-}
-
-int sniffer::link_layer() const
-{
-    return _datalink_type;
 }

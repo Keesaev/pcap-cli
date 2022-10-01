@@ -6,12 +6,15 @@ int main()
     for (const auto& dev : sniffer::devices()) { 
         std::cout << dev.first << " " << dev.second << std::endl;
     }
-    sniffer handler(sniffer::devices()[0].first);
-    if(handler.valid()){
-        handler.run();
+
+    std::unique_ptr<sniffer> s;
+
+    try{
+        s = std::make_unique<sniffer>(sniffer::devices()[0].first);
     }
-    else{
-        std::cerr << "invalid" << std::endl;
+    catch(sniffer_exception ex){
+        std::cerr << ex.what() << std::endl;
     }
+
     return 0;
 }
