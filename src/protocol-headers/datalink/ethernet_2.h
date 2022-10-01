@@ -18,6 +18,6 @@ class ethernet_2 final : public datalink {
 public:
     ethernet_2(const unsigned char* bytes);
 
-    virtual int size() const final;
+    virtual int proto_size() const final { return sizeof(ethernet_2_h); }
     virtual network_proto_type next_protocol() const final;
 };

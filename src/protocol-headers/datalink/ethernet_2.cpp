@@ -30,11 +30,6 @@ network_proto_type ethernet_2::next_protocol() const
     }
 }
 
-int ethernet_2::size() const
-{
-    return sizeof(ethernet_2_h);
-}
-
 std::string ethernet_2::pretty_mac(const uint8_t* const src_mac) const
 {
     char str[25];

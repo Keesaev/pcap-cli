@@ -8,7 +8,7 @@ public:
     {
         return network_proto_type::unsupported;
     }
-    virtual int size() const final { return 0; };
+    virtual int proto_size() const final { return 0; };
 
     virtual ~unsupported_datalink() { }
 };

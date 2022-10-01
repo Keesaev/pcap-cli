@@ -21,7 +21,7 @@ static const std::unordered_set<int> supported_datalink_protos {
 class datalink {
 public:
     virtual network_proto_type next_protocol() const = 0;
-    virtual int size() const = 0;
+    virtual int proto_size() const = 0;
 
     virtual ~datalink() { }
 };

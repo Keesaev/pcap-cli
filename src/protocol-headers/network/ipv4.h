@@ -38,7 +38,7 @@ public:
     virtual std::string src_addr() const final;
     virtual std::string dst_addr() const final;
     virtual transport_proto_type next_protocol_type() const final;
-    virtual int size() final { return sizeof(ipv4_h); }
+    virtual int proto_size() final { return sizeof(ipv4_h); }
 
     virtual ~ipv4() { }
 };

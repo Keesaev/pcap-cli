@@ -4,6 +4,6 @@
 
 class unsupported_transport final : public transport {
 public:
-    virtual int size() const final { return 0; }
+    virtual int proto_size() const final { return 0; }
     virtual ~unsupported_transport() { }
 };
