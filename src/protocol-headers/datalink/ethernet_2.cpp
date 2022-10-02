@@ -5,7 +5,7 @@
 
 #include <netinet/in.h>
 
-const std::array<std::string, 3> ethernet_2::_descriptions {
+const std::array<std::string, ethernet_2::_field_count> ethernet_2::_descriptions {
     "Destination mac", "Source mac", "Ether type"
 };
 
@@ -48,14 +48,17 @@ std::string ethernet_2::pretty_mac(const uint8_t* const src_mac) const
 
 const std::pair<std::string, std::string> ethernet_2::operator[](std::size_t idx) const
 {
-    switch (idx) {
-    case 0:
-        return { pretty_mac(_data.dest_mac), _descriptions[0] };
-    case 1:
-        return { pretty_mac(_data.src_mac), _descriptions[1] };
-    case 2:
-        return { std::to_string(_data.ether_t), _descriptions[2] };
-    default:
-        return { "", "" };
-    }
+    auto value = [this](std::size_t idx) -> std::string {
+        switch (idx) {
+        case 0:
+            return pretty_mac(_data.dest_mac);
+        case 1:
+            return pretty_mac(_data.src_mac);
+        case 2:
+            return std::to_string(_data.ether_t);
+        default:
+            return "";
+        }
+    };
+    return { value(idx), _descriptions[idx] };
 }

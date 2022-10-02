@@ -57,12 +57,13 @@ class ipv4 final : public network {
 public:
     ipv4(const unsigned char* bytes);
 
+    virtual std::string name() const final { return "IPv4"; };
     virtual std::string src_addr() const final;
     virtual std::string dst_addr() const final;
     virtual transport_proto_type next_protocol_type() const final;
     virtual int proto_size() final { return sizeof(ipv4_h); }
 
-    virtual int size() const final
+    virtual int field_count() const final
     {
         return _field_count;
     }

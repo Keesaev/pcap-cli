@@ -20,10 +20,11 @@ static const std::unordered_set<int> supported_datalink_protos {
 
 class datalink {
 public:
+    virtual std::string name() const = 0;
     virtual network_proto_type next_protocol() const = 0;
     virtual int proto_size() const = 0;
-    virtual int size() const = 0;
-    virtual const std::pair<std::string,std::string> operator[](std::size_t idx) const = 0;
+    virtual int field_count() const = 0;
+    virtual const std::pair<std::string, std::string> operator[](std::size_t idx) const = 0;
 
     virtual ~datalink() { }
 };

@@ -12,15 +12,15 @@ void tui_sink::run(std::string const& device)
 void tui_sink::print(packet pkt) const
 {
     const auto& dl = pkt.get_datalink();
-    std::cout << "DATALINK" << std::endl;
-    for (int i = 0; i < dl->size(); i++) {
+    std::cout << dl->name() << std::endl;
+    for (int i = 0; i < dl->field_count(); i++) {
         auto [value, desc] = (*dl)[i];
         std::cout << '\t' << desc << '\t' << value << std::endl;
     }
 
     const auto& nl = pkt.get_network();
-    std::cout << "NETWORK" << std::endl;
-    for(int i = 0; i < nl->size(); i++){
+    std::cout << dl->name() << std::endl;
+    for (int i = 0; i < nl->field_count(); i++) {
         auto [value, desc] = (*nl)[i];
         std::cout << '\t' << desc << '\t' << value << std::endl;
     }
