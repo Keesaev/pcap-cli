@@ -7,7 +7,6 @@ int main()
         std::cout << dev.first << " " << dev.second << std::endl;
     }
 
-    std::unique_ptr<sniffer> s;
     tui_sink sink;
 
     try {
