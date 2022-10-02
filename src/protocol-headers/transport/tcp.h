@@ -33,6 +33,6 @@ class tcp final : public transport {
 
 public:
     tcp(const unsigned char* bytes);
-    virtual int proto_size() const final { return sizeof(tcp_h); }
+    virtual int header_size() const final { return sizeof(tcp_h); }
     virtual ~tcp() { }
 };

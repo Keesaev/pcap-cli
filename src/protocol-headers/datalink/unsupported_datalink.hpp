@@ -9,7 +9,7 @@ public:
     {
         return network_proto_type::unsupported;
     }
-    virtual int proto_size() const final { return 0; };
+    virtual int header_size() const final { return 0; };
     virtual int field_count() const final { return 0; };
     virtual const std::pair<std::string, std::string> operator[](std::size_t idx) const final { return { "", "" }; };
 

@@ -1,30 +1,13 @@
 #pragma once
 
-#include <string>
 #include <unordered_set>
 
-// supported network protos
-enum class network_proto_type {
-    unsupported = 0,
-    ipv4,
-    ipv6
-};
+#include "../datalink/datalink_protos.hpp"
+#include "../network/network_protos.hpp"
+#include "../protocol_header.hpp"
 
-enum class datalink_proto_type {
-    ethernet_2 = 1
-};
-
-static const std::unordered_set<int> supported_datalink_protos {
-    1
-};
-
-class datalink {
+class datalink : public protocol_header {
 public:
-    virtual std::string name() const = 0;
     virtual network_proto_type next_protocol() const = 0;
-    virtual int proto_size() const = 0;
-    virtual int field_count() const = 0;
-    virtual const std::pair<std::string, std::string> operator[](std::size_t idx) const = 0;
-
     virtual ~datalink() { }
 };
