@@ -1,10 +1,12 @@
 #pragma once
 
+#include <array>
 #include <stdint.h>
 
 #include "network.hpp"
 
 class ipv4 final : public network {
+#pragma pack(push, 1)
     struct ip_addr {
         uint8_t oct1;
         uint8_t oct2;
@@ -19,18 +21,38 @@ class ipv4 final : public network {
         }
     };
 
+    struct ipv4_vhl {
+        uint8_t ihl : 4;
+        uint8_t version : 4;
+    };
+
+    struct ipv4_tos {
+        uint8_t dscp : 6;
+        uint8_t ecn : 2;
+    };
+
+    struct ipv4_flags_offset {
+        uint8_t reserved : 1;
+        uint8_t df : 1;
+        uint8_t mf : 1;
+        uint16_t offset : 13;
+    };
+
     struct ipv4_h {
-        uint8_t v_hl;
-        uint8_t tos;
+        ipv4_vhl vhl;
+        ipv4_tos tos;
         uint16_t length;
         uint16_t id;
-        uint16_t offset;
+        ipv4_flags_offset offset;
         uint8_t ttl;
         uint8_t protocol;
         uint16_t checksum;
         ip_addr src_addr;
         ip_addr dest_addr;
     } _data;
+#pragma pack(pop)
+    static const int _field_count = 14;
+    static const std::array<std::string, _field_count> _descriptions;
 
 public:
     ipv4(const unsigned char* bytes);
@@ -39,6 +61,12 @@ public:
     virtual std::string dst_addr() const final;
     virtual transport_proto_type next_protocol_type() const final;
     virtual int proto_size() final { return sizeof(ipv4_h); }
+
+    virtual int size() const final
+    {
+        return _field_count;
+    }
+    virtual const std::pair<std::string, std::string> operator[](std::size_t idx) const final;
 
     virtual ~ipv4() { }
 };

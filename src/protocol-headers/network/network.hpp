@@ -17,5 +17,8 @@ public:
     virtual transport_proto_type next_protocol_type() const = 0;
     virtual int proto_size() = 0;
 
+    virtual int size() const = 0;
+    virtual const std::pair<std::string, std::string> operator[](std::size_t idx) const = 0;
+
     virtual ~network() { }
 };
