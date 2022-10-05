@@ -11,18 +11,13 @@ void tui_sink::run(std::string const& device)
 
 void tui_sink::print(packet pkt) const
 {
-    const auto& dl = pkt.get_datalink();
-    std::cout << dl->name() << std::endl;
-    for (int i = 0; i < dl->field_count(); i++) {
-        auto [value, desc] = (*dl)[i];
-        std::cout << '\t' << desc << '\t' << value << std::endl;
-    }
-
-    const auto& nl = pkt.get_network();
-    std::cout << dl->name() << std::endl;
-    for (int i = 0; i < nl->field_count(); i++) {
-        auto [value, desc] = (*nl)[i];
-        std::cout << '\t' << desc << '\t' << value << std::endl;
+    for (const auto& layer : pkt.get_all_headers()) {
+        std::cout << layer->name() << '\n'
+                  << layer->hex() << '\n';
+        for (int i = 0; i < layer->field_count(); i++) {
+            auto [value, desc] = (*layer)[i];
+            std::cout << '\t' << desc << '\t' << value << '\n';
+        }
     }
 }
 

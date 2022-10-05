@@ -3,11 +3,16 @@
 #include <string>
 
 class protocol_header {
+protected:
 public:
     /**
      * @brief name - get protocol name (IPv4, Ethernet II...)
      */
     virtual std::string name() const = 0;
+    /**
+     * @brief hex - get protocol header represented as string of bytes in hex
+     */
+    virtual std::string hex() const = 0;
     /**
      * @brief header_size - get header size
      */

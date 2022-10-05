@@ -5,6 +5,7 @@
 class unsupported_network final : public network {
 public:
     virtual std::string name() const final { return "Unsupported"; };
+    virtual std::string hex() const final { return ""; }
     virtual std::string src_addr() const final { return ""; };
     virtual std::string dst_addr() const final { return ""; };
     virtual transport_proto_type next_protocol_type() const final

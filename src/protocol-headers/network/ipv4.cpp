@@ -4,7 +4,9 @@
 
 #include <netinet/in.h>
 
+#include <iomanip>
 #include <iostream> // TODO RM
+#include <sstream>
 
 const std::array<std::string, ipv4::_field_count> ipv4::_descriptions {
     "Version",
@@ -26,16 +28,21 @@ const std::array<std::string, ipv4::_field_count> ipv4::_descriptions {
 ipv4::ipv4(const unsigned char* bytes)
     : _data { *reinterpret_cast<const ipv4_h*>(bytes) }
 {
-    std::cout << "==== ipv4_vhl: " << sizeof(ipv4_vhl) << "; "
+    // TODO remove
+    std::cout << "ipv4_vhl: " << sizeof(ipv4_vhl) << "; "
               << "ipv4_tos: " << sizeof(ipv4_tos) << "; "
               << "ipv4_flags_offset: " << sizeof(ipv4_flags_offset) << "; "
               << "ipv4_h: " << sizeof(ipv4_h) << std::endl;
+}
 
-    std::cout << "IPv4:\t\t";
+std::string ipv4::hex() const
+{
+    auto bytes = reinterpret_cast<const uint8_t*>(&_data);
+    std::stringstream stream;
     for (int i = 0; i < sizeof(ipv4_h); i++) {
-        std::cout << std::hex << (int)bytes[i] << std::dec << ' ';
+        stream << std::setw(2) << std::setfill('0') << std::hex << (int)bytes[i] << ' ';
     }
-    std::cout << std::endl;
+    return stream.str();
 }
 
 std::string ipv4::src_addr() const

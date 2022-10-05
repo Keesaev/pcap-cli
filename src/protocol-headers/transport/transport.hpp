@@ -1,7 +1,8 @@
 #pragma once
 
-class transport {
+#include "../protocol_header.hpp"
+
+class transport : public protocol_header {
 public:
-    virtual int header_size() const = 0;
     virtual ~transport() { }
 };

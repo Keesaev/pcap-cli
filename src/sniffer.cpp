@@ -46,7 +46,7 @@ void sniffer::run()
 {
     // TODO while(_running)
 
-    for (int i = 0; i < 10; i++) {
+    for (int i = 0; i < 1; i++) {
         // struct pcap_pkthdr and the packet data are not to
         // be freed by the caller, and are not guaranteed to be valid
 

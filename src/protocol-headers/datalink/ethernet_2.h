@@ -21,10 +21,12 @@ public:
     ethernet_2(const unsigned char* bytes);
 
     virtual std::string name() const final { return "Ethernet II"; }
+    virtual std::string hex() const final;
     virtual int header_size() const final { return sizeof(ethernet_2_h); }
-    virtual network_proto_type next_protocol() const final;
     virtual int field_count() const final { return 3; }
     virtual const std::pair<std::string, std::string> operator[](std::size_t idx) const final;
+
+    virtual network_proto_type next_protocol() const final;
 
     virtual ~ethernet_2() {};
 };

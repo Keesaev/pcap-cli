@@ -28,4 +28,15 @@ public:
      * @brief get_transport - returns ptr reference to transport object
      */
     std::unique_ptr<transport> const& get_transport() const { return _transport; }
+    /**
+     * @brief get_all_headers - returns all headers casted to base class
+     */
+    std::array<const protocol_header* const, 3> get_all_headers() const
+    {
+        return {
+            _datalink.get(),
+            _network.get(),
+            _transport.get()
+        };
+    }
 };

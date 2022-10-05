@@ -1,7 +1,8 @@
 #include "ethernet_2.h"
 
 #include <cstring>
-#include <iostream> // TODO rm
+#include <iomanip>
+#include <sstream>
 
 #include <netinet/in.h>
 
@@ -12,17 +13,21 @@ const std::array<std::string, ethernet_2::_field_count> ethernet_2::_description
 ethernet_2::ethernet_2(const unsigned char* bytes)
 {
     std::memcpy(&_data, bytes, sizeof(ethernet_2_h));
-    _data.ether_t = ::htons(_data.ether_t);
-    std::cout << "ethernet_2:\t";
+}
+
+std::string ethernet_2::hex() const
+{
+    auto bytes = reinterpret_cast<const uint8_t*>(&_data);
+    std::stringstream stream;
     for (int i = 0; i < sizeof(ethernet_2_h); i++) {
-        std::cout << std::hex << (int)bytes[i] << " ";
+        stream << std::setw(2) << std::setfill('0') << std::hex << (int)bytes[i] << ' ';
     }
-    std::cout << std::endl;
+    return stream.str();
 }
 
 network_proto_type ethernet_2::next_protocol() const
 {
-    switch (static_cast<ether_type>(_data.ether_t)) {
+    switch (static_cast<ether_type>(::htons(_data.ether_t))) {
     case ether_type::ipv4:
         return network_proto_type::ipv4;
     case ether_type::ipv6:
@@ -55,7 +60,7 @@ const std::pair<std::string, std::string> ethernet_2::operator[](std::size_t idx
         case 1:
             return pretty_mac(_data.src_mac);
         case 2:
-            return std::to_string(_data.ether_t);
+            return std::to_string(::htons(_data.ether_t));
         default:
             return "";
         }
