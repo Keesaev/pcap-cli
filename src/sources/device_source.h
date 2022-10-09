@@ -1,6 +1,7 @@
 #pragma once
 
-#include "protocol-headers/packet.h"
+#include "../protocol-headers/packet.h"
+#include "base_source.hpp"
 
 #include <pcap/pcap.h>
 
@@ -21,16 +22,16 @@ enum class sniffer_ex_code {
     link_layer_not_sup
 };
 
-class sniffer_exception final : public std::exception {
+class device_exception final : public source_exception {
     sniffer_ex_code _code;
     static std::unordered_map<sniffer_ex_code, std::string> _code_strings;
 
 public:
-    sniffer_exception(int code)
+    device_exception(int code)
         : _code(static_cast<sniffer_ex_code>(code))
     {
     }
-    sniffer_exception(sniffer_ex_code code)
+    device_exception(sniffer_ex_code code)
         : _code(code)
     {
     }
@@ -38,10 +39,9 @@ public:
     {
         return _code_strings[_code].c_str();
     }
-    sniffer_ex_code code() const noexcept { return _code; }
 };
 
-class sniffer {
+class device_source final : public base_source {
     std::unique_ptr<pcap_t, void (*)(pcap_t*)> _handle;
     std::function<void(packet)> _callback;
 
@@ -51,9 +51,8 @@ class sniffer {
     int _datalink_proto;
 
 public:
-    sniffer(std::string const& device_name, std::function<void(packet)> callback) noexcept(false);
-    static std::vector<std::pair<std::string, std::string>> devices();
+    device_source(std::string const& device_name, std::function<void(packet)> callback) noexcept(false);
 
-    void run();
-    // void stop();
+    virtual void run() final;
+    virtual void stop() final { }
 };

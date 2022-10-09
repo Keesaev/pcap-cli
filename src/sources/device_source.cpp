@@ -1,8 +1,8 @@
-#include "sniffer.h"
+#include "device_source.h"
 
 #include <iostream> // TODO RM
 
-std::unordered_map<sniffer_ex_code, std::string> sniffer_exception::_code_strings {
+std::unordered_map<sniffer_ex_code, std::string> device_exception::_code_strings {
     { sniffer_ex_code::already_activated, "PCAP already activated" },
     { sniffer_ex_code::no_such_device, "No such device" },
     { sniffer_ex_code::perm_denied, "Permission denied" },
@@ -13,7 +13,7 @@ std::unordered_map<sniffer_ex_code, std::string> sniffer_exception::_code_string
     { sniffer_ex_code::link_layer_not_sup, "Datalink layer not supported" }
 };
 
-sniffer::sniffer(std::string const& device_name, std::function<void(packet)> callback)
+device_source::device_source(std::string const& device_name, std::function<void(packet)> callback)
     : _handle { std::unique_ptr<pcap_t, void (*)(pcap_t*)>(
         pcap_create(device_name.c_str(), errbuf),
         [](pcap_t* handle) { pcap_close(handle); }) }
@@ -30,19 +30,19 @@ sniffer::sniffer(std::string const& device_name, std::function<void(packet)> cal
         auto act = pcap_activate(_handle.get());
 
         if (act != 0) {
-            throw sniffer_exception(act);
+            throw device_exception(act);
         }
 
         _datalink_proto = pcap_datalink(_handle.get());
         if (supported_datalink_protos.find(_datalink_proto) == supported_datalink_protos.end()) {
-            throw sniffer_exception(sniffer_ex_code::link_layer_not_sup);
+            throw device_exception(sniffer_ex_code::link_layer_not_sup);
         }
     } else {
-        throw sniffer_exception(sniffer_ex_code::generic_err);
+        throw device_exception(sniffer_ex_code::generic_err);
     }
 }
 
-void sniffer::run()
+void device_source::run()
 {
     // TODO while(_running)
 
@@ -58,22 +58,4 @@ void sniffer::run()
         }
         _callback(packet(_datalink_proto, body));
     }
-}
-
-std::vector<std::pair<std::string, std::string>> sniffer::devices()
-{
-    std::vector<std::pair<std::string, std::string>> devs;
-
-    pcap_if_t* alldevs;
-    int retVal = pcap_findalldevs(&alldevs, nullptr);
-
-    if (retVal != PCAP_ERROR) {
-        while (alldevs->next != NULL) {
-            devs.push_back({ alldevs->name,
-                alldevs->description == nullptr ? "" : alldevs->description });
-            alldevs = alldevs->next;
-        }
-    }
-    pcap_freealldevs(alldevs);
-    return devs;
 }

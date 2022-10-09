@@ -1,12 +1,14 @@
 #include "tui_sink.h"
 
+#include "../../sources/device_source.h"
+
 #include <iostream>
 
 void tui_sink::run(std::string const& device)
 {
-    _sniffer.reset(
-        new sniffer(device, std::bind(&tui_sink::print, this, std::placeholders::_1)));
-    _sniffer->run();
+    _source.reset(
+        new device_source(device, std::bind(&tui_sink::print, this, std::placeholders::_1)));
+    _source->run();
 }
 
 void tui_sink::print(packet pkt) const

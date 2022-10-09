@@ -10,6 +10,9 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 file(GLOB SOURCES
     ./src/*.cpp
     ./src/*.h
+    ./src/sources/*.cpp
+    ./src/sources/*.hpp
+    ./src/sources/*.h
     ./src/protocol-headers/*.cpp
     ./src/protocol-headers/*.hpp
     ./src/protocol-headers/*.h
