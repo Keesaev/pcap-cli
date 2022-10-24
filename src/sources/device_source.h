@@ -43,7 +43,6 @@ public:
 
 class device_source final : public base_source {
     std::unique_ptr<pcap_t, void (*)(pcap_t*)> _handle;
-    std::function<void(packet)> _callback;
 
     int m_packetCount { 0 };
     bool m_running = false;
@@ -51,8 +50,9 @@ class device_source final : public base_source {
     int _datalink_proto;
 
 public:
-    device_source(std::string const& device_name, std::function<void(packet)> callback) noexcept(false);
+    device_source(std::string const& device_name) noexcept(false);
 
     virtual void run() final;
+    // TODO
     virtual void stop() final { }
 };

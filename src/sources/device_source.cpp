@@ -1,7 +1,5 @@
 #include "device_source.h"
 
-#include <iostream> // TODO RM
-
 std::unordered_map<sniffer_ex_code, std::string> device_exception::_code_strings {
     { sniffer_ex_code::already_activated, "PCAP already activated" },
     { sniffer_ex_code::no_such_device, "No such device" },
@@ -13,11 +11,11 @@ std::unordered_map<sniffer_ex_code, std::string> device_exception::_code_strings
     { sniffer_ex_code::link_layer_not_sup, "Datalink layer not supported" }
 };
 
-device_source::device_source(std::string const& device_name, std::function<void(packet)> callback)
+device_source::device_source(std::string const& device_name)
     : _handle { std::unique_ptr<pcap_t, void (*)(pcap_t*)>(
         pcap_create(device_name.c_str(), errbuf),
         [](pcap_t* handle) { pcap_close(handle); }) }
-    , _callback { callback }
+
 {
     if (_handle.get()) {
         pcap_set_snaplen(_handle.get(), 65535);
@@ -56,6 +54,9 @@ void device_source::run()
         if (pcap_next_ex(_handle.get(), &header, &body) != 1) {
             continue;
         }
-        _callback(packet(_datalink_proto, body));
+        for (const auto& sink : _sinks) {
+            sink->emplace_back(packet(_datalink_proto, body));
+        }
+        //_callback(packet(_datalink_proto, body));
     }
 }

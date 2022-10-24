@@ -1,7 +1,9 @@
-#include "sinks/tui/tui_sink.h"
 #include <iostream>
 
 #include "src/sources/pcap_helper.h"
+#include "sinks/tui/tui_sink.h"
+#include "sources/device_source.h"
+#include "sinks/sink.h"
 
 int main()
 {
@@ -9,12 +11,15 @@ int main()
         std::cout << dev.first << " " << dev.second << std::endl;
     }
 
-    tui_sink sink;
+    auto sink = std::unique_ptr<tui_sink>(new tui_sink());
+    auto source = std::make_unique<device_source>(pcap_helper::devices()[0].first);
+    source->add_sink(sink.get());
 
-    try {
-        sink.run(pcap_helper::devices()[0].first);
-    } catch (source_exception &ex) {
-        std::cerr << ex.what() << std::endl;
+    try{
+        source->run();
+    }
+    catch(source_exception &ex){
+        std::cout << ex.what() << std::endl;
     }
 
     return 0;

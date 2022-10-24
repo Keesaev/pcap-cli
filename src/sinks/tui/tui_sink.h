@@ -1,19 +1,13 @@
 #pragma once
 
-#include "../../sources/base_source.hpp"
-#include "../../protocol-headers/packet.h"
 #include "../sink.h"
 
-#include <memory>
-
 class tui_sink final : public sink {
-    std::unique_ptr<base_source> _source;
+    void print(packet const& pkt) const;
 
 public:
-    virtual void run(std::string const& device) noexcept(false) final;
-    virtual void stop() final;
-
-    void print(packet pkt) const;
+    virtual void push_back(packet const& p) final;
+    virtual void emplace_back(packet&& p) final;
 
     virtual ~tui_sink() { }
 };

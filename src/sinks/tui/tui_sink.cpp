@@ -4,14 +4,17 @@
 
 #include <iostream>
 
-void tui_sink::run(std::string const& device)
+void tui_sink::push_back(packet const& p)
 {
-    _source.reset(
-        new device_source(device, std::bind(&tui_sink::print, this, std::placeholders::_1)));
-    _source->run();
+    print(p);
 }
 
-void tui_sink::print(packet pkt) const
+void tui_sink::emplace_back(packet&& p)
+{
+    print(p);
+}
+
+void tui_sink::print(packet const& pkt) const
 {
     for (const auto& layer : pkt.get_all_headers()) {
         std::cout << layer->name() << '\n'
@@ -22,5 +25,3 @@ void tui_sink::print(packet pkt) const
         }
     }
 }
-
-void tui_sink::stop() { }
