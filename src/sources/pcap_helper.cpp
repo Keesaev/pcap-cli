@@ -2,9 +2,9 @@
 
 #include <pcap/pcap.h>
 
-std::vector<std::pair<std::string, std::string>> pcap_helper::devices()
+std::vector<pcap_source> pcap_helper::devices()
 {
-    std::vector<std::pair<std::string, std::string>> devs;
+    std::vector<pcap_source> devs;
 
     pcap_if_t* alldevs;
     int retVal = pcap_findalldevs(&alldevs, nullptr);

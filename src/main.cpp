@@ -7,12 +7,12 @@
 
 int main()
 {
-    for (const auto& dev : pcap_helper::devices()) {
-        std::cout << dev.first << " " << dev.second << std::endl;
+    for (const auto &[name, desc] : pcap_helper::devices()) {
+        std::cout << name << " " << desc << std::endl;
     }
 
     auto sink = std::unique_ptr<tui_sink>(new tui_sink());
-    auto source = std::make_unique<device_source>(pcap_helper::devices()[0].first);
+    auto source = std::make_unique<device_source>(pcap_helper::devices()[0].name);
     source->add_sink(sink.get());
 
     try{
