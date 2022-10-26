@@ -16,7 +16,7 @@ int main()
 
     auto sink = std::unique_ptr<tui_sink>(new tui_sink());
     ///auto source = std::make_unique<device_source>(pcap_helper::devices()[0].name);
-    auto source = std::make_unique<pcapng_source>("../test/tcp_1.pcapng");
+    auto source = std::make_unique<pcapng_source>("../test/tcp_3_packages.pcapng");
     source->add_sink(sink.get());
 
     try{
