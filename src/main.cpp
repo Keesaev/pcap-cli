@@ -1,6 +1,6 @@
 #include <iostream>
 
-#include "sinks/tui/tui_sink.h"
+#include "sinks/stdout/stdout_sink.h"
 #include "sinks/sink.h"
 
 #include "sources/device_source.h"
@@ -14,7 +14,7 @@ int main()
         std::cout << name << " " << desc << std::endl;
     }*/
 
-    auto sink = std::unique_ptr<tui_sink>(new tui_sink());
+    auto sink = std::unique_ptr<stdout_sink>(new stdout_sink());
     ///auto source = std::make_unique<device_source>(pcap_helper::devices()[0].name);
     auto source = std::make_unique<pcapng_source>("../test/tcp_3_packages.pcapng");
     source->add_sink(sink.get());

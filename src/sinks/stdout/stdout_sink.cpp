@@ -1,20 +1,20 @@
-#include "tui_sink.h"
+#include "stdout_sink.h"
 
 #include "../../sources/device_source.h"
 
 #include <iostream>
 
-void tui_sink::push_back(packet const& p)
+void stdout_sink::push_back(packet const& p)
 {
     print(p);
 }
 
-void tui_sink::emplace_back(packet&& p)
+void stdout_sink::emplace_back(packet&& p)
 {
     print(p);
 }
 
-void tui_sink::print(packet const& pkt) const
+void stdout_sink::print(packet const& pkt) const
 {
     for (const auto& layer : pkt.get_all_headers()) {
         std::cout << layer->name() << '\n'
