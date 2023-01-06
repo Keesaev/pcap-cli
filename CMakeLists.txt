@@ -1,6 +1,6 @@
 cmake_minimum_required(VERSION 3.5)
 
-project(pcap-test LANGUAGES C CXX)
+project(pcap-cli LANGUAGES C CXX)
 
 set(CMAKE_INCLUDE_CURRENT_DIR ON)
 
@@ -27,8 +27,8 @@ file(GLOB SOURCES
     ./src/protocol-headers/transport/*.h
     ./src/sinks/*.h
     ./src/sinks/*.h
-    ./src/sinks/tui/*.h
-    ./src/sinks/tui/*.cpp
+    ./src/sinks/stdout/*.h
+    ./src/sinks/stdout/*.cpp
 )
 
 add_executable(${CMAKE_PROJECT_NAME}
