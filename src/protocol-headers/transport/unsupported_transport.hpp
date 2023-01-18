@@ -4,7 +4,7 @@
 
 class unsupported_transport final : public transport {
 public:
-    virtual std::string name() const final { return "unsupported"; }
+    virtual std::string name() const final { return "Unsupported"; }
     virtual std::string hex() const final { return ""; }
     virtual int header_size() const final { return 0; }
     virtual int field_count() const final { return 0; }
