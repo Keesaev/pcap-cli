@@ -16,6 +16,8 @@ public:
      * @param bytes - pointer to data containing package
      */
     packet(int datalink_proto, const unsigned char* bytes);
+    packet(packet &&p) = default;
+    packet& operator=(packet&& p) = default;
     /**
      * @brief get_datalink - returns ptr reference to datalink object
      */

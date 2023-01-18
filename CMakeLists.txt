@@ -7,6 +7,10 @@ set(CMAKE_INCLUDE_CURRENT_DIR ON)
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
+include_directories(
+  ./src/
+)
+
 file(GLOB SOURCES
     ./src/*.cpp
     ./src/*.h
@@ -25,7 +29,6 @@ file(GLOB SOURCES
     ./src/protocol-headers/transport/*.cpp
     ./src/protocol-headers/transport/*.hpp
     ./src/protocol-headers/transport/*.h
-    ./src/sinks/*.h
     ./src/sinks/*.h
     ./src/sinks/stdout/*.h
     ./src/sinks/stdout/*.cpp

@@ -1,13 +1,8 @@
 #include "stdout_sink.h"
 
-#include "../../sources/device_source.h"
+#include <sources/device_source.h>
 
 #include <iostream>
-
-void stdout_sink::push_back(packet const& p)
-{
-    print(p);
-}
 
 void stdout_sink::emplace_back(packet&& p)
 {

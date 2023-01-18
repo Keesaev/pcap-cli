@@ -3,37 +3,45 @@ cmake_minimum_required(VERSION 3.5)
 project(test-pcap-cli LANGUAGES C CXX)
 
 set(CMAKE_INCLUDE_CURRENT_DIR ON)
-set(PROJECT_SRC "./../src")
-set(TEST_SRC "./src")
+set(PROJECT_SRC_DIR "./../src")
+set(TEST_SRC_DIR "./src")
+set(RAPID_CSV_DIR "./rapidcsv")
 
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
-include_directories(${PROJECT_SRC})
+include_directories(
+  ${PROJECT_SRC_DIR}
+  ${RAPID_CSV_DIR}/src
+)
 
 file(GLOB SOURCES
-    ${TEST_SRC}/main.cpp
-    ${TEST_SRC}/deserialization_tests.cpp
+    ${TEST_SRC_DIR}/main.cpp
+    ${TEST_SRC_DIR}/deserialization_tests.cpp
+
+    ${RAPID_CSV_DIR}/src/rapidcsv.h
     
-    ${PROJECT_SRC}/sources/*.cpp
-    ${PROJECT_SRC}/sources/*.hpp
-    ${PROJECT_SRC}/sources/*.h
-    ${PROJECT_SRC}/protocol-headers/*.cpp
-    ${PROJECT_SRC}/protocol-headers/*.hpp
-    ${PROJECT_SRC}/protocol-headers/*.h
-    ${PROJECT_SRC}/protocol-headers/datalink/*.cpp
-    ${PROJECT_SRC}/protocol-headers/datalink/*.hpp
-    ${PROJECT_SRC}/protocol-headers/datalink/*.h
-    ${PROJECT_SRC}/protocol-headers/network/*.cpp
-    ${PROJECT_SRC}/protocol-headers/network/*.hpp
-    ${PROJECT_SRC}/protocol-headers/network/*.h
-    ${PROJECT_SRC}/protocol-headers/transport/*.cpp
-    ${PROJECT_SRC}/protocol-headers/transport/*.hpp
-    ${PROJECT_SRC}/protocol-headers/transport/*.h
-    ${PROJECT_SRC}/sinks/*.h
-    ${PROJECT_SRC}/sinks/*.h
-    ${PROJECT_SRC}/sinks/stdout/*.h
-    ${PROJECT_SRC}/sinks/stdout/*.cpp
+    ${PROJECT_SRC_DIR}/sources/*.cpp
+    ${PROJECT_SRC_DIR}/sources/*.hpp
+    ${PROJECT_SRC_DIR}/sources/*.h
+    ${PROJECT_SRC_DIR}/protocol-headers/*.cpp
+    ${PROJECT_SRC_DIR}/protocol-headers/*.hpp
+    ${PROJECT_SRC_DIR}/protocol-headers/*.h
+    ${PROJECT_SRC_DIR}/protocol-headers/datalink/*.cpp
+    ${PROJECT_SRC_DIR}/protocol-headers/datalink/*.hpp
+    ${PROJECT_SRC_DIR}/protocol-headers/datalink/*.h
+    ${PROJECT_SRC_DIR}/protocol-headers/network/*.cpp
+    ${PROJECT_SRC_DIR}/protocol-headers/network/*.hpp
+    ${PROJECT_SRC_DIR}/protocol-headers/network/*.h
+    ${PROJECT_SRC_DIR}/protocol-headers/transport/*.cpp
+    ${PROJECT_SRC_DIR}/protocol-headers/transport/*.hpp
+    ${PROJECT_SRC_DIR}/protocol-headers/transport/*.h
+    ${PROJECT_SRC_DIR}/sinks/*.h
+    ${PROJECT_SRC_DIR}/sinks/stdout/*.h
+    ${PROJECT_SRC_DIR}/sinks/stdout/*.cpp
+    ${PROJECT_SRC_DIR}/sinks/test/*.h
+    ${PROJECT_SRC_DIR}/sinks/test/*.cpp
+
 )
 
 include(FetchContent)
