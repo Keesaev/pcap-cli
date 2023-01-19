@@ -65,8 +65,8 @@ transport_proto_type ipv4::next_protocol_type() const
         return transport_proto_type::tcp;
     case ipv4_protos::UDP:
         return transport_proto_type::udp;
-    // case ipv4_protos::ICMP:
-    //     return transport_proto_type::icmp;
+    case ipv4_protos::ICMP:
+        return transport_proto_type::icmp;
     default:
         return transport_proto_type::unsupported;
         break;

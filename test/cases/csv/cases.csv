@@ -3,3 +3,5 @@ number,pcapng_file,level_2_file,level_3_file,level_4_file
 2,"packet_2.pcapng","ethernet_2.csv","ipv4.csv","tcp.csv"
 3,"packet_3.pcapng","ethernet_2.csv","ipv4.csv","udp.csv"
 4,"packet_4.pcapng","ethernet_2.csv","ipv4.csv","udp.csv"
+5,"packet_5.pcapng","ethernet_2.csv","ipv4.csv","icmp.csv"
+6,"packet_6.pcapng","ethernet_2.csv","ipv4.csv","icmp.csv"

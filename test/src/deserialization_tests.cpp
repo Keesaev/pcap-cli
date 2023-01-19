@@ -68,6 +68,8 @@ TEST_P(deserialization_test, check_sigle_pcapng)
         check_file_path(case_row[idx]);
     }
 
+    std::cout << pcapng_file << std::endl;
+
     auto source = std::make_unique<pcapng_source>(pcapng_file);
     auto sink = std::unique_ptr<test_sink>(new test_sink());
     auto print_sink = std::unique_ptr<stdout_sink>(new stdout_sink());
