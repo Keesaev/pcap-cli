@@ -56,7 +56,7 @@ const std::pair<std::string, std::string> tcp::operator[](std::size_t idx) const
         case 3:
             return std::to_string(::htonl(data.ack_num));
         case 4:
-            return std::to_string(data.control.data_offset);
+            return std::to_string(data.control.data_offset * 4);
         case 5:
             return std::to_string(data.control.reserved);
         case 6:
