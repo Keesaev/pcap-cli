@@ -28,11 +28,14 @@ const std::array<std::string, ipv4::_field_count> ipv4::_descriptions {
 ipv4::ipv4(const unsigned char* bytes)
     : _data { *reinterpret_cast<const ipv4_h*>(bytes) }
 {
-    // TODO remove
-    std::cout << "ipv4_vhl: " << sizeof(ipv4_vhl) << "; "
-              << "ipv4_tos: " << sizeof(ipv4_tos) << "; "
-              << "ipv4_flags_offset: " << sizeof(ipv4_flags_offset) << "; "
-              << "ipv4_h: " << sizeof(ipv4_h) << std::endl;
+    uint16_t reversed_offset = ::htons(*reinterpret_cast<uint16_t*>(&_data.offset));
+    _data.offset = *reinterpret_cast<ipv4_flags_offset*>(&reversed_offset);
+
+    auto hex = reinterpret_cast<uint8_t*>(&_data.offset);
+    std::stringstream stream;
+    for (int i = 0; i < sizeof(uint16_t); i++) {
+        stream << std::setw(2) << std::setfill('0') << std::hex << (int)hex[i] << ' ';
+    }
 }
 
 std::string ipv4::hex() const

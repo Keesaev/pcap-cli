@@ -32,10 +32,10 @@ class ipv4 final : public network {
     };
 
     struct ipv4_flags_offset {
+        uint16_t offset : 13;
         uint8_t reserved : 1;
         uint8_t df : 1;
         uint8_t mf : 1;
-        uint16_t offset : 13;
     };
 
     struct ipv4_h {
