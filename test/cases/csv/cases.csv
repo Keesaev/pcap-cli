@@ -1,0 +1,3 @@
+number,pcapng_file,level_2_file,level_3_file,level_4_file
+1,"packet_1.pcapng","ethernet_2.csv","ipv4.csv","tcp.csv"
+2,"packet_2.pcapng","ethernet_2.csv","ipv4.csv","tcp.csv"

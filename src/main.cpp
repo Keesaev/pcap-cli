@@ -9,14 +9,12 @@
 
 int main()
 {
-    /*
     for (const auto &[name, desc] : pcap_helper::devices()) {
         std::cout << name << " " << desc << std::endl;
-    }*/
+    }
 
     auto sink = std::unique_ptr<stdout_sink>(new stdout_sink());
-    ///auto source = std::make_unique<device_source>(pcap_helper::devices()[0].name);
-    auto source = std::make_unique<pcapng_source>("../test/tcp_3_packages.pcapng");
+    auto source = std::make_unique<device_source>(pcap_helper::devices()[0].name);
     source->add_sink(sink.get());
 
     try{

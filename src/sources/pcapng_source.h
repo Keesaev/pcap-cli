@@ -3,7 +3,6 @@
 #include "../protocol-headers/packet.h"
 #include "base_source.hpp"
 
-#include <functional>
 #include <string>
 
 #include <pcap/pcap.h>
