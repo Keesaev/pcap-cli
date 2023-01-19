@@ -2,6 +2,7 @@
 #include <rapidcsv.h>
 
 #include <sinks/test/test_sink.h>
+#include <sinks/stdout/stdout_sink.h>
 #include <sources/pcapng_source.h>
 
 #include <cassert>
@@ -69,8 +70,10 @@ TEST_P(deserialization_test, check_sigle_pcapng)
 
     auto source = std::make_unique<pcapng_source>(pcapng_file);
     auto sink = std::unique_ptr<test_sink>(new test_sink());
+    auto print_sink = std::unique_ptr<stdout_sink>(new stdout_sink());
 
     source->add_sink(sink.get());
+    //source->add_sink(print_sink.get());
 
     EXPECT_NO_THROW(source->run());
     EXPECT_GT(sink->packets().size(), 0) << "Could not parse single packet";

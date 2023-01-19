@@ -63,8 +63,8 @@ transport_proto_type ipv4::next_protocol_type() const
     switch (static_cast<ipv4_protos>(_data.protocol)) {
     case ipv4_protos::TCP:
         return transport_proto_type::tcp;
-    // case ipv4_protos::UDP:
-    //     return transport_proto_type::udp;
+    case ipv4_protos::UDP:
+        return transport_proto_type::udp;
     // case ipv4_protos::ICMP:
     //     return transport_proto_type::icmp;
     default:
@@ -80,7 +80,7 @@ const std::pair<std::string, std::string> ipv4::operator[](std::size_t idx) cons
         case 0:
             return std::to_string(data.vhl.version);
         case 1:
-            return std::to_string(data.vhl.ihl);
+            return std::to_string(data.vhl.ihl * 4);
         case 2:
             return std::to_string(data.tos.dscp);
         case 3:
