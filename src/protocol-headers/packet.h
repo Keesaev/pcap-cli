@@ -1,8 +1,8 @@
 #pragma once
 
-#include "datalink/datalink_factory.h"
-#include "network/network_factory.h"
-#include "transport/transport_factory.h"
+#include <protocol-headers/datalink/datalink_factory.h>
+#include <protocol-headers/network/network_factory.h>
+#include <protocol-headers/transport/transport_factory.h>
 
 class packet {
     std::unique_ptr<datalink> _datalink;

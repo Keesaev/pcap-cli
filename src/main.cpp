@@ -1,11 +1,11 @@
 #include <iostream>
 
-#include "sinks/stdout/stdout_sink.h"
-#include "sinks/sink.h"
+#include <sinks/stdout/stdout_sink.h>
+#include <sinks/sink.h>
 
-#include "sources/device_source.h"
-#include "sources/pcapng_source.h"
-#include "sources/pcap_helper.h"
+#include <sources/device_source.h>
+#include <sources/pcapng_source.h>
+#include <sources/pcap_helper.h>
 
 int main()
 {

@@ -1,6 +1,6 @@
 #pragma once
 
-#include "../sink.h"
+#include <sinks/sink.h>
 
 class stdout_sink final : public sink {
     void print(packet const& pkt) const;

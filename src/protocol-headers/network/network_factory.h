@@ -1,6 +1,6 @@
 #pragma once
 
-#include "../datalink/datalink.hpp"
+#include <protocol-headers/datalink/datalink.hpp>
 #include "network.hpp"
 
 #include <memory>

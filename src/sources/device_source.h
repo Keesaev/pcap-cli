@@ -1,6 +1,6 @@
 #pragma once
 
-#include "../protocol-headers/packet.h"
+#include <protocol-headers/packet.h>
 #include "base_source.hpp"
 
 #include <pcap/pcap.h>

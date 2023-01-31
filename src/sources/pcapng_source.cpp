@@ -1,5 +1,5 @@
 #include "pcapng_source.h"
-#include "../protocol-headers/packet.h"
+#include <protocol-headers/packet.h>
 
 #include <iostream>
 

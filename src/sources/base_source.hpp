@@ -3,7 +3,7 @@
 #include <exception>
 #include <vector>
 
-#include "../sinks/sink.h"
+#include <sinks/sink.h>
 
 class source_exception : public std::exception {
 public:

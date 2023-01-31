@@ -1,6 +1,6 @@
 #pragma once
 
-#include "../protocol_header.hpp"
+#include <protocol-headers/protocol_header.hpp>
 
 // supported transport protos
 enum class transport_proto_type {

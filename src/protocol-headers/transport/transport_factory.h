@@ -1,6 +1,6 @@
 #pragma once
 
-#include "../network/network.hpp"
+#include <protocol-headers/network/network.hpp>
 #include "transport.hpp"
 
 #include <memory>

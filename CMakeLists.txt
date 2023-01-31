@@ -7,9 +7,9 @@ set(CMAKE_INCLUDE_CURRENT_DIR ON)
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
-include_directories(
-  ./src/
-)
+# vscode stuff
+add_definitions(-DCMAKE_EXPORT_COMPILE_COMMANDS=ON)
+set( CMAKE_EXPORT_COMPILE_COMMANDS ON )
 
 file(GLOB SOURCES
     ./src/*.cpp
@@ -38,7 +38,11 @@ add_executable(${CMAKE_PROJECT_NAME}
     ${SOURCES}
 )
 
-target_include_directories(${CMAKE_PROJECT_NAME} PUBLIC "${PROJECT_BINARY_DIR}")
+target_include_directories(${CMAKE_PROJECT_NAME} PUBLIC 
+  ${PROJECT_BINARY_DIR}
+  ${CMAKE_CURRENT_SOURCE_DIR}
+  ${CMAKE_CURRENT_SOURCE_DIR}/src
+)
 
 include(cmake/FindPCAP.cmake)
 
